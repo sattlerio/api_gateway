@@ -1,0 +1,53 @@
+info:
+  component: Edge Server
+
+endpoints:
+  restart:
+    enabled: true
+
+auth:
+  ribbon:
+    listOfServers: http://localhost:5000
+    ServerListRefreshInterval: 15000
+
+companyService:
+  ribbon:
+    listOfServers: http://localhost:9000
+
+zuul:
+  ignoredServices: '*'
+  requestUriKey: /api
+  health:
+    enabled: true
+  routes:
+    auth:
+      path: /auth/**
+      sensitiveHeaders: Cookie,Set-Cookie
+      serviceId: auth
+      stripPrefix: false
+    companyService:
+      path: /api/company/**
+      sensitiveHeaders: Cookie,Set-Cookie
+      serviceId: companyService
+      stripPrefix: true
+
+eureka:
+  client:
+    enabled: false
+
+ribbon:
+  UseIPAddrForServer: true
+  eureka:
+    enabled: false
+
+server:
+  port: 8080
+
+debug: true
+trace: false
+logging:
+  level:
+    org:
+      springframework:
+        cloud:
+          netflix: trace
