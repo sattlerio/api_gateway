@@ -4,8 +4,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.xml.bind.DatatypeConverter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.netflix.zuul.context.RequestContext;
 import com.netflix.zuul.ZuulFilter;
 
@@ -19,9 +17,11 @@ import io.jsonwebtoken.JwtParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 
 import io.jsonwebtoken.Jwts;
+import org.springframework.util.MultiValueMap;
 
 import java.lang.reflect.Field;
 import java.util.*;
@@ -71,11 +71,25 @@ public class PreFilter extends ZuulFilter {
             if (request.getRequestURI().contains(requestUriKey)) {
                 String header = request.getHeader("Authorization");
 
+                log.info("--------------");
+                log.info(request.getMethod());
+                MultiValueMap<String,String> headers = new HttpHeaders();
+                for (Enumeration names = request.getHeaderNames(); names.hasMoreElements();) {
+                    String name = (String)names.nextElement();
+                    for (Enumeration values = request.getHeaders(name); values.hasMoreElements();) {
+                        String value = (String)values.nextElement();
+                        headers.add(name,value);
+                    }
+                };
+                log.info(headers.toString());
+                log.info("---------------");
+
+
                 if (header == null || header.isEmpty() || !header.startsWith("Bearer ")) {
 
                     logInfoWithTransactionID(transactionID, "no aut header found abort transaction");
 
-                    throw new AuthorizationHeaderException("no auth header  in transaction", new Throwable());
+                    return null;
 
                 } else {
 
