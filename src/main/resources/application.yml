@@ -18,6 +18,10 @@ countryService:
   ribbon:
     listOfServers: http://localhost:4040
 
+currencyService:
+  ribbon:
+    listOfServers: http://localhost:9090
+
 zuul:
   ignoredServices: '*'
   requestUriKey: /api
@@ -38,6 +42,11 @@ zuul:
       path: /api/company/**
       sensitiveHeaders: Cookie,Set-Cookie
       serviceId: companyService
+      stripPrefix: true
+    currencyService:
+      path: /resources/money/**
+      sensitiveHeaders: Cookie,Set-Cookie
+      serviceId: currencyService
       stripPrefix: true
 
 eureka:
