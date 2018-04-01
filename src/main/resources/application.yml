@@ -22,6 +22,10 @@ currencyService:
   ribbon:
     listOfServers: http://localhost:9090
 
+assetService:
+  ribbon:
+    listOfServers: http://localhost:9999
+
 zuul:
   ignoredServices: '*'
   requestUriKey: /api
@@ -47,6 +51,11 @@ zuul:
       path: /resources/money/**
       sensitiveHeaders: Cookie,Set-Cookie
       serviceId: currencyService
+      stripPrefix: true
+    assetService:
+      path: /api/assets/**
+      sensitiveHeaders: Cookie,Set-Cookie
+      serviceId: assetService
       stripPrefix: true
 
 eureka:
