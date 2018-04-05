@@ -14,6 +14,10 @@ companyService:
   ribbon:
     listOfServers: http://localhost:9000
 
+plutosTaxService:
+  ribbon:
+    listOfServers: http://localhost:3000
+
 countryService:
   ribbon:
     listOfServers: http://localhost:4040
@@ -22,9 +26,10 @@ currencyService:
   ribbon:
     listOfServers: http://localhost:9090
 
-assetService:
+guardianAuthorizationService:
   ribbon:
-    listOfServers: http://localhost:9999
+    listOfServers: http://localhost:9000
+
 
 zuul:
   ignoredServices: '*'
@@ -47,15 +52,20 @@ zuul:
       sensitiveHeaders: Cookie,Set-Cookie
       serviceId: companyService
       stripPrefix: true
+    plutosTaxService:
+      path: /api/accounting/**
+      sensitiveHeaders: Cookie,Set-Cookie
+      serviceId: plutosTaxService
+      stripPrefix: true
     currencyService:
       path: /resources/money/**
       sensitiveHeaders: Cookie,Set-Cookie
       serviceId: currencyService
       stripPrefix: true
-    assetService:
-      path: /api/assets/**
+    guardianAuthorizationService:
+      path: /resources/authorization/**
       sensitiveHeaders: Cookie,Set-Cookie
-      serviceId: assetService
+      serviceId: guardianAuthorizationService
       stripPrefix: true
 
 eureka:
