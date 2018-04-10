@@ -12,7 +12,7 @@ auth:
 
 companyService:
   ribbon:
-    listOfServers: http://localhost:9000
+    listOfServers: http://localhost:9050
 
 plutosTaxService:
   ribbon:
