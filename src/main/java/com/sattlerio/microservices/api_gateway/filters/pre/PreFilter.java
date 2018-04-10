@@ -3,7 +3,9 @@ package com.sattlerio.microservices.api_gateway.filters.pre;
 import javax.servlet.http.HttpServletRequest;
 import javax.xml.bind.DatatypeConverter;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.util.JSONPObject;
 import com.netflix.zuul.context.RequestContext;
 import com.netflix.zuul.ZuulFilter;
 
@@ -14,6 +16,7 @@ import com.sattlerio.microservices.api_gateway.objects.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwt;
 import io.jsonwebtoken.JwtParser;
+import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -75,7 +78,15 @@ public class PreFilter extends ZuulFilter {
 
                     logInfoWithTransactionID(transactionID, "no aut header found abort transaction");
 
-                    return null;
+                    String jsonResponse = new JSONObject()
+                            .put("status", "ERROR")
+                            .put("request_id", transactionID)
+                            .put("message", "you have to send your authentication header")
+                            .put("broker", "api-gateway").toString();
+                    ctx.addZuulResponseHeader("Content-Type", "application/json");
+                    ctx.setResponseStatusCode(401);
+                    ctx.setResponseBody(jsonResponse);
+                    ctx.setSendZuulResponse(false);
 
                 } else {
 
