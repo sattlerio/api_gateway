@@ -32,7 +32,7 @@ guardianAuthorizationService:
 
 dionysusEventMicroservice:
   ribbon:
-    listOfServers: http://localhost:9000
+    listOfServers: http://localhost:9400
 
 
 zuul:
