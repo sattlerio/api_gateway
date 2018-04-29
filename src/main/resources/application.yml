@@ -34,6 +34,10 @@ dionysusEventMicroservice:
   ribbon:
     listOfServers: http://localhost:9400
 
+hermesShippingRuleService:
+  ribbon:
+    listOfServers: http://localhost:10000
+
 
 zuul:
   ignoredServices: '*'
@@ -75,6 +79,11 @@ zuul:
       path: /api/events/**
       sensitiveHeaders: Cookie,Set-Cookie
       serviceId: dionysusEventMicroservice
+      stripPrefix: true
+    hermesShippingRuleService:
+      path: /api/shipping/**
+      sensitiveHeaders: Cookie,Set-Cookie
+      serviceId: hermesShippingRuleService
       stripPrefix: true
 
 eureka:
