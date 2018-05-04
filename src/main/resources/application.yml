@@ -38,6 +38,10 @@ hermesShippingRuleService:
   ribbon:
     listOfServers: http://localhost:10000
 
+channelManager:
+  ribbon:
+    listOfServers: http://localhost:11000
+
 
 zuul:
   ignoredServices: '*'
@@ -84,6 +88,11 @@ zuul:
       path: /api/shipping/**
       sensitiveHeaders: Cookie,Set-Cookie
       serviceId: hermesShippingRuleService
+      stripPrefix: true
+    channelManager:
+      path: /api/channgels/**
+      sensitiveHeaders: Cookie,Set-Cookie
+      serviceId: channelManager
       stripPrefix: true
 
 eureka:
