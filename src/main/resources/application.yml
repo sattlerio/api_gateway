@@ -90,7 +90,7 @@ zuul:
       serviceId: hermesShippingRuleService
       stripPrefix: true
     channelManager:
-      path: /api/channgels/**
+      path: /api/channels/**
       sensitiveHeaders: Cookie,Set-Cookie
       serviceId: channelManager
       stripPrefix: true
