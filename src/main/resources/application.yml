@@ -42,6 +42,9 @@ channelManager:
   ribbon:
     listOfServers: http://localhost:11000
 
+stripeHandler:
+  ribbon:
+    listOfServers: http://localhost:12000
 
 zuul:
   ignoredServices: '*'
@@ -93,6 +96,11 @@ zuul:
       path: /api/channels/**
       sensitiveHeaders: Cookie,Set-Cookie
       serviceId: channelManager
+      stripPrefix: true
+    stripeHandler:
+      path: /channels/payments/stripe/**
+      sensitiveHeaders: Cookie,Set-Cookie
+      serviceId: stripeHandler
       stripPrefix: true
 
 eureka:
