@@ -108,6 +108,7 @@ eureka:
     enabled: false
 
 ribbon:
+  ReadTimeout: 10000
   UseIPAddrForServer: true
   eureka:
     enabled: false
