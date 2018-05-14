@@ -54,6 +54,10 @@ picassoTicketDesignService:
   ribbon:
     listOfServers: http://localhost:14000
 
+assetManagementService:
+  ribbon:
+    listOfServers: http://localhost:15000
+
 zuul:
   ignoredServices: '*'
   requestUriKey: /api
@@ -117,6 +121,14 @@ zuul:
       stripPrefix: true
     picassoTicketDesignService:
       path: /api/ticket-design/**
+      sensitiveHeaders: Cookie,Set-Cookie
+      serviceId: picassoTicketDesignService
+      stripPrefix: true
+    assetManagementService:
+      path: /api/assets/**
+      sensitiveHeaders: Cookie,Set-Cookie
+      serviceId: assetManagementService
+      stripPrefix: true
 
 eureka:
   client:
