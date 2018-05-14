@@ -46,6 +46,14 @@ stripeHandler:
   ribbon:
     listOfServers: http://localhost:12000
 
+braintreeHandler:
+  ribbon:
+    listOfServers: http://localhost:13000
+
+picassoTicketDesignService:
+  ribbon:
+    listOfServers: http://localhost:14000
+
 zuul:
   ignoredServices: '*'
   requestUriKey: /api
@@ -102,6 +110,13 @@ zuul:
       sensitiveHeaders: Cookie,Set-Cookie
       serviceId: stripeHandler
       stripPrefix: true
+    braintreeHandler:
+      path: /channels/payments/braintree/**
+      sensitiveHeaders: Cookie,Set-Cookie
+      serviceId: braintreeHandler
+      stripPrefix: true
+    picassoTicketDesignService:
+      path: /api/ticket-design/**
 
 eureka:
   client:
